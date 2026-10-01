@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+  <title>Admin Dashboard &mdash; PhysioCare Clinic Management</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+              950: '#042f2e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+    <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-serif-header {
+      font-family: 'Playfair Display', serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0d9488;
+      border-radius: 9999px;
+    }
+    html {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    [dir="rtl"] .rtl-flip,
+    [dir="rtl"] [data-lucide="arrow-right"],
+    [dir="rtl"] [data-lucide="chevron-right"],
+    [dir="rtl"] [data-lucide="arrow-left"],
+    [dir="rtl"] [data-lucide="chevron-left"] {
+      transform: scaleX(-1);
+    }
+    .sidebar-link.active {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+    .dark .sidebar-link.active {
+      background-color: #3b82f6;
+      color: #ffffff;
+    }
+    .mobile-drawer {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+  <style>
+    *, ::before, ::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    img, video, iframe, svg {
+      max-width: 100%;
+      height: auto;
+    }
+    p, h1, h2, h3, h4, h5, h6 {
+      overflow-wrap: break-word;
+    }
+    header, nav, button, .whitespace-nowrap {
+      white-space: nowrap !important;
+      word-break: normal !important;
+    }
+    @media (max-width: 640px) {
+      .w-full {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .text-3xl { font-size: 1.5rem !important; line-height: 2rem !important; }
+      .text-4xl, .text-5xl { font-size: 1.75rem !important; line-height: 2.25rem !important; }
+      .p-8, .p-10, .p-12 { padding: 1.25rem !important; }
+      .px-8, .px-10, .px-12 { padding-left: 1rem !important; padding-right: 1rem !important; }
+      .py-16, .py-20 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+    }
+    @media (max-width: 320px) {
+      .px-4 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 dark:bg-[#090d16] dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen">
+
+  <div class="flex min-h-screen overflow-x-hidden">
+    
+    <!-- ========================================== -->
+    <!-- 1. LEFT SIDEBAR NAVIGATION (DESKTOP)       -->
+    <!-- ========================================== -->
+    <aside id="sidebar-desktop" class="hidden lg:flex flex-col w-64 xl:w-72 bg-[#0a101d] dark:bg-[#070b14] text-slate-300 border-r border-slate-800 flex-shrink-0 justify-between p-5 sticky top-0 h-screen z-40">
+      
+      <div class="space-y-8">
+        
+        <!-- Brand Logo Header -->
+        <a href="index.html" class="flex items-center gap-3 px-2 pt-1 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-brand-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-extrabold text-white tracking-tight">PhysioCare</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest text-emerald-400 -mt-1">ADMIN CLINIC DESK</span>
+          </div>
+        </a>
+
+        <!-- Section 1: MAIN MENU -->
+        <div class="space-y-2">
+          <div class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Main Menu</div>
+          <nav class="space-y-1">
+            
+            <button onclick="switchTab('clinic-overview')" data-tab="clinic-overview" id="nav-btn-clinic-overview" class="sidebar-link active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <span>Clinic Overview</span>
+              </span>
+            </button>
+
+            <button onclick="switchTab('patient-mgmt')" data-tab="patient-mgmt" id="nav-btn-patient-mgmt" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                <span>Patient Management</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">148 Active</span>
+            </button>
+
+            <button onclick="switchTab('appointment-mgmt')" data-tab="appointment-mgmt" id="nav-btn-appointment-mgmt" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+                <span>Appointment Mgmt</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold">18 Today</span>
+            </button>
+
+            <button onclick="switchTab('therapist-mgmt')" data-tab="therapist-mgmt" id="nav-btn-therapist-mgmt" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="user-check" class="w-4 h-4"></i>
+                <span>Therapist Mgmt</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-bold">12 Staff</span>
+            </button>
+
+            <button onclick="switchTab('treatment-mgmt')" data-tab="treatment-mgmt" id="nav-btn-treatment-mgmt" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+                <span>Treatment Protocols</span>
+              </span>
+            </button>
+
+          </nav>
+        </div>
+
+        <!-- Section 2: FINANCIALS & REPORTS -->
+        <div class="space-y-2">
+          <div class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Financials & Reports</div>
+          <nav class="space-y-1">
+            
+            <button onclick="switchTab('payment-mgmt')" data-tab="payment-mgmt" id="nav-btn-payment-mgmt" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                <span>Payment Mgmt</span>
+              </span>
+            </button>
+
+            <button onclick="switchTab('clinic-reports')" data-tab="clinic-reports" id="nav-btn-clinic-reports" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                <span>Clinic Analytics Reports</span>
+              </span>
+            </button>
+
+            <a href="index.html" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors pt-2">
+              <i data-lucide="home" class="w-4 h-4 text-brand-400"></i>
+              <span>Back to Main Website</span>
+            </a>
+
+          </nav>
+        </div>
+
+      </div>
+
+      <!-- Bottom Admin Profile Card -->
+      <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-sm shadow">
+            RH
+          </div>
+          <div>
+            <div class="text-xs font-bold text-white">Dr. Richard Hayes</div>
+            <div class="text-[10px] text-emerald-400 font-semibold">Chief Medical Administrator</div>
+          </div>
+        </div>
+        <a href="index.html" title="Exit Admin Desk" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- MOBILE DRAWER SIDEBAR                      -->
+    <!-- ========================================== -->
+    <div id="mobile-drawer-backdrop" onclick="closeMobileDrawer()" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+
+    <aside id="mobile-drawer" class="mobile-drawer fixed top-0 left-0 rtl:left-auto rtl:right-0 z-50 w-72 max-w-[85vw] h-full bg-[#0a101d] text-slate-300 border-r rtl:border-r-0 rtl:border-l border-slate-800 shadow-2xl flex flex-col justify-between p-5 -translate-x-full rtl:translate-x-full lg:hidden overflow-y-auto">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold text-white">PhysioCare Admin</span>
+          </div>
+          <button onclick="closeMobileDrawer()" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <nav class="space-y-1 text-xs">
+          <button onclick="switchTab('clinic-overview')" data-tab="clinic-overview" class="sidebar-link active w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Clinic Overview
+          </button>
+          <button onclick="switchTab('patient-mgmt')" data-tab="patient-mgmt" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="users" class="w-4 h-4"></i> Patient Management
+          </button>
+          <button onclick="switchTab('appointment-mgmt')" data-tab="appointment-mgmt" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="calendar" class="w-4 h-4"></i> Appointment Management
+          </button>
+          <button onclick="switchTab('therapist-mgmt')" data-tab="therapist-mgmt" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="user-check" class="w-4 h-4"></i> Therapist Management
+          </button>
+          <button onclick="switchTab('treatment-mgmt')" data-tab="treatment-mgmt" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="clipboard-check" class="w-4 h-4"></i> Treatment Protocols
+          </button>
+          <button onclick="switchTab('payment-mgmt')" data-tab="payment-mgmt" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="credit-card" class="w-4 h-4"></i> Payment Management
+          </button>
+          <button onclick="switchTab('clinic-reports')" data-tab="clinic-reports" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Clinic Reports & Analytics
+          </button>
+          <a href="index.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-400 hover:text-white hover:bg-slate-800 pt-2">
+            <i data-lucide="home" class="w-4 h-4 text-brand-400"></i> Back to Main Website
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- 2. RIGHT CONTENT AREA                      -->
+    <!-- ========================================== -->
+    <div class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] dark:bg-[#090d16]">
+      
+      <!-- TOP HEADER BAR (STICKY) -->
+      <header id="dashboard-header" class="sticky top-0 z-50 h-16 px-4 sm:px-8 bg-white/95 dark:bg-[#0d1322]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between shadow-sm transition-all duration-200">
+        
+        <!-- Left Search & Mobile Toggle -->
+        <div class="flex items-center gap-3 flex-1 max-w-md">
+          <button onclick="openMobileDrawer()" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+          <div class="relative w-full">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-slate-400"></i>
+            <input type="text" placeholder="Search patients, appointments, staff, invoices..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border-0 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 placeholder-slate-400" />
+          </div>
+        </div>
+
+        <!-- Right Controls -->
+        <div class="flex items-center gap-3">
+          
+          <div class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Clinic Operations Live
+          </div>
+
+          <button onclick="alert('3 new appointment requests waiting for review.')" class="relative p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500"></span>
+          </button>
+
+          <button id="theme-toggle-btn" type="button" title="Toggle Light / Dark Mode" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors">
+            <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 hidden dark:block text-amber-300"></i>
+            <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 block dark:hidden text-amber-500"></i>
+          </button>
+
+          <button id="rtl-toggle-btn" type="button" title="Toggle Direction (LTR / RTL)" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors">
+            <i data-lucide="languages" class="w-3.5 h-3.5 text-emerald-500"></i>
+            <span id="rtl-status-badge">LTR</span>
+          </button>
+
+        </div>
+
+      </header>
+
+      <!-- MAIN CONTENT PANEL -->
+      <main class="flex-grow p-4 sm:p-8 space-y-8 max-w-7xl w-full mx-auto">
+        
+        <!-- ========================================== -->
+        <!-- TAB 1: CLINIC OVERVIEW                     -->
+        <!-- ========================================== -->
+        <div id="tab-content-clinic-overview" class="tab-content space-y-8">
+          
+          <!-- ADMIN HERO BANNER (SCOPED INSIDE OVERVIEW) -->
+          <div class="relative rounded-3xl bg-[#090f1d] border border-slate-800 text-white p-6 sm:p-10 shadow-2xl overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              
+              <div class="space-y-3 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800 text-emerald-300 text-[11px] font-extrabold uppercase tracking-wider">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  ADMIN DESK &bull; REAL-TIME CLINIC MANAGEMENT
+                </div>
+                
+                <h1 class="text-3xl sm:text-4xl font-extrabold font-serif-header tracking-tight text-emerald-100">
+                  Welcome Back, <span class="text-emerald-400">Dr. Richard Hayes</span>
+                </h1>
+
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  PhysioCare Rehabilitation Center has 18 sessions scheduled today, 148 active patient protocols, and 12 on-duty therapists across 4 specialized bays.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-3">
+                <button onclick="switchTab('appointment-mgmt')" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-xl shadow-emerald-500/20 transition-all flex-shrink-0">
+                  <i data-lucide="plus" class="w-4 h-4"></i> Schedule Appointment
+                </button>
+                <button onclick="switchTab('patient-mgmt')" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all">
+                  <i data-lucide="user-plus" class="w-4 h-4 text-emerald-400"></i> Add New Patient
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 4 METRIC SUMMARY CARDS (SCOPED INSIDE OVERVIEW) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- Card 1 -->
+            <div onclick="switchTab('patient-mgmt')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-emerald-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-emerald-500 transition-colors">Total Active Patients</span>
+                <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                  <i data-lucide="users" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-slate-900 dark:text-white">148</div>
+              <div class="text-[11px] text-emerald-500 font-semibold">
+                ↑ +14 new admissions this month &rarr;
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div onclick="switchTab('appointment-mgmt')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-blue-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-blue-500 transition-colors">Today's Appointments</span>
+                <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                  <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-blue-600 dark:text-blue-400">18</div>
+              <div class="text-[11px] text-slate-500 font-semibold">
+                12 completed &bull; 6 remaining &rarr;
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div onclick="switchTab('therapist-mgmt')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-teal-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-teal-500 transition-colors">On-Duty Therapists</span>
+                <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center">
+                  <i data-lucide="user-check" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-teal-600 dark:text-teal-400">12 Staff</div>
+              <div class="text-[11px] text-teal-500 font-semibold">
+                100% On-Site Duty &rarr;
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div onclick="switchTab('payment-mgmt')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-sky-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-sky-500 transition-colors">Monthly Revenue</span>
+                <div class="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+                  <i data-lucide="dollar-sign" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-slate-900 dark:text-white">$34,850</div>
+              <div class="text-[11px] text-emerald-500 font-semibold">
+                ↑ +18.4% YoY Growth &rarr;
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Real-Time Activity & Quick Action Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Daily Clinic Schedule Stream</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Real-time status of today's active sessions</p>
+                </div>
+                <button onclick="switchTab('appointment-mgmt')" class="text-xs font-bold text-emerald-500 hover:underline">
+                  Full Schedule &rarr;
+                </button>
+              </div>
+
+              <div class="space-y-3">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold flex items-center justify-center">09:00</div>
+                    <div>
+                      <div class="font-bold text-slate-900 dark:text-white">Marcus Vance &bull; ACL Rehab Phase 3</div>
+                      <div class="text-slate-500">Therapist: Dr. Sarah Jenkins &bull; Suite 4B</div>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Completed</span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 font-bold flex items-center justify-center">10:30</div>
+                    <div>
+                      <div class="font-bold text-slate-900 dark:text-white">Elena Rostova &bull; Lumbar Stabilization</div>
+                      <div class="text-slate-500">Therapist: Michael Ross, PT &bull; Bay 2</div>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 font-bold">In Session</span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold flex items-center justify-center">14:00</div>
+                    <div>
+                      <div class="font-bold text-slate-900 dark:text-white">David Miller &bull; Rotator Cuff Post-Op</div>
+                      <div class="text-slate-500">Therapist: Dr. Sarah Jenkins &bull; Laser Bay</div>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-600 font-bold">Upcoming</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Quick Operations</h3>
+              <div class="space-y-3">
+                <button onclick="switchTab('patient-mgmt')" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-emerald-500 transition-colors">
+                  <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 text-emerald-500"></i> Manage Patient Records</span>
+                  <span>&rarr;</span>
+                </button>
+                <button onclick="switchTab('appointment-mgmt')" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-blue-500 transition-colors">
+                  <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-blue-500"></i> Reschedule Session</span>
+                  <span>&rarr;</span>
+                </button>
+                <button onclick="switchTab('treatment-mgmt')" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-teal-500 transition-colors">
+                  <span class="flex items-center gap-2"><i data-lucide="clipboard-check" class="w-4 h-4 text-teal-500"></i> Update Rehab Protocols</span>
+                  <span>&rarr;</span>
+                </button>
+                <button onclick="switchTab('clinic-reports')" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200 hover:border-purple-500 transition-colors">
+                  <span class="flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4 text-purple-500"></i> View Monthly Reports</span>
+                  <span>&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: PATIENT MANAGEMENT                  -->
+        <!-- ========================================== -->
+        <div id="tab-content-patient-mgmt" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Patient Database</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Patient Records & Medical Profiles</h2>
+              </div>
+              <button onclick="alert('Open Add Patient Modal Form')" class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors">
+                + Add New Patient
+              </button>
+            </div>
+
+            <!-- Patient Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 dark:bg-[#070b14] text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <tr>
+                    <th class="p-4 rounded-l-xl">Patient ID</th>
+                    <th class="p-4">Patient Name</th>
+                    <th class="p-4">Assigned Protocol</th>
+                    <th class="p-4">Primary Therapist</th>
+                    <th class="p-4">Progress</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 rounded-r-xl text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#PX-84920</td>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">Marcus Vance</td>
+                    <td class="p-4">ACL Reconstruction (Phase 3)</td>
+                    <td class="p-4">Dr. Sarah Jenkins</td>
+                    <td class="p-4"><span class="font-bold text-emerald-500">68%</span></td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Active</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Opened profile #PX-84920')" class="text-emerald-600 dark:text-emerald-400 font-bold hover:underline">Edit Profile</button></td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#PX-84921</td>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">Elena Rostova</td>
+                    <td class="p-4">Lumbar Spine Stabilization</td>
+                    <td class="p-4">Michael Ross, PT</td>
+                    <td class="p-4"><span class="font-bold text-emerald-500">82%</span></td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Active</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Opened profile #PX-84921')" class="text-emerald-600 dark:text-emerald-400 font-bold hover:underline">Edit Profile</button></td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#PX-84922</td>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">David Miller</td>
+                    <td class="p-4">Rotator Cuff Repair (Phase 2)</td>
+                    <td class="p-4">Dr. Sarah Jenkins</td>
+                    <td class="p-4"><span class="font-bold text-amber-500">45%</span></td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Active</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Opened profile #PX-84922')" class="text-emerald-600 dark:text-emerald-400 font-bold hover:underline">Edit Profile</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: APPOINTMENT MANAGEMENT              -->
+        <!-- ========================================== -->
+        <div id="tab-content-appointment-mgmt" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Scheduling Desk</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Appointment & Calendar Management</h2>
+              </div>
+              <button onclick="alert('Opening Schedule Session Modal...')" class="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-500 transition-colors">
+                + Schedule Therapy Session
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 dark:bg-[#070b14] text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <tr>
+                    <th class="p-4 rounded-l-xl">Ref ID</th>
+                    <th class="p-4">Date & Time</th>
+                    <th class="p-4">Patient</th>
+                    <th class="p-4">Therapist</th>
+                    <th class="p-4">Type</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 rounded-r-xl text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#APT-99201</td>
+                    <td class="p-4">Tomorrow, 10:00 AM</td>
+                    <td class="p-4">Marcus Vance</td>
+                    <td class="p-4">Dr. Sarah Jenkins</td>
+                    <td class="p-4">Isokinetic Strength Testing</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Confirmed</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Rescheduled APT-99201')" class="text-blue-500 font-bold hover:underline">Reschedule</button></td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#APT-99202</td>
+                    <td class="p-4">Tomorrow, 02:00 PM</td>
+                    <td class="p-4">Elena Rostova</td>
+                    <td class="p-4">Michael Ross, PT</td>
+                    <td class="p-4">Class IV Laser Therapy</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 font-bold">In Desk Review</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Rescheduled APT-99202')" class="text-blue-500 font-bold hover:underline">Reschedule</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: THERAPIST MANAGEMENT                -->
+        <!-- ========================================== -->
+        <div id="tab-content-therapist-mgmt" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Clinical Staff Directory</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Therapist Profiles & Availability</h2>
+              </div>
+              <button onclick="alert('Open Add Therapist Modal')" class="px-4 py-2 rounded-xl bg-teal-600 text-white font-bold text-xs hover:bg-teal-500 transition-colors">
+                + Add Staff Member
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <!-- Staff Card 1: Dr. Sarah Jenkins -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-4 flex flex-col justify-between hover:border-emerald-500/40 transition-colors">
+                <div class="flex items-start gap-3.5">
+                  <img src="images/therapist_dr_sarah_jenkins.jpg" alt="Dr. Sarah Jenkins" class="w-14 h-14 rounded-2xl object-cover border-2 border-emerald-500 flex-shrink-0 shadow-sm" />
+                  <div class="space-y-0.5 min-w-0">
+                    <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Dr. Sarah Jenkins, DPT</h4>
+                    <div class="text-[11px] text-emerald-500 font-semibold truncate">Lead Orthopedic Specialist</div>
+                    <span class="inline-block px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">OCS Certified</span>
+                  </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800/80 space-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <div class="flex items-center justify-between">
+                    <span>Active Caseload:</span>
+                    <strong class="text-slate-900 dark:text-white font-mono">28 Patients</strong>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span>Shift Hours:</span>
+                    <strong class="text-emerald-500 font-mono text-[11px]">Mon&ndash;Fri (08:00&ndash;16:00)</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Staff Card 2: Dr. Marcus Vance -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-4 flex flex-col justify-between hover:border-blue-500/40 transition-colors">
+                <div class="flex items-start gap-3.5">
+                  <img src="images/therapist_dr_marcus_vance.jpg" alt="Dr. Marcus Vance" class="w-14 h-14 rounded-2xl object-cover border-2 border-blue-500 flex-shrink-0 shadow-sm" />
+                  <div class="space-y-0.5 min-w-0">
+                    <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Dr. Marcus Vance, DPT</h4>
+                    <div class="text-[11px] text-blue-500 font-semibold truncate">Head Sports Rehabilitation</div>
+                    <span class="inline-block px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 text-[10px] font-bold">SCS Certified</span>
+                  </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800/80 space-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <div class="flex items-center justify-between">
+                    <span>Active Caseload:</span>
+                    <strong class="text-slate-900 dark:text-white font-mono">24 Patients</strong>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span>Shift Hours:</span>
+                    <strong class="text-blue-400 font-mono text-[11px]">Mon&ndash;Sat (10:00&ndash;18:00)</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Staff Card 3: Dr. Elena Rostova -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-4 flex flex-col justify-between hover:border-purple-500/40 transition-colors">
+                <div class="flex items-start gap-3.5">
+                  <img src="images/therapist_dr_elena_rostova.jpg" alt="Dr. Elena Rostova" class="w-14 h-14 rounded-2xl object-cover border-2 border-purple-500 flex-shrink-0 shadow-sm" />
+                  <div class="space-y-0.5 min-w-0">
+                    <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Dr. Elena Rostova, DPT</h4>
+                    <div class="text-[11px] text-purple-500 font-semibold truncate">Neurological Retraining Lead</div>
+                    <span class="inline-block px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 text-[10px] font-bold">NCS Certified</span>
+                  </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800/80 space-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <div class="flex items-center justify-between">
+                    <span>Active Caseload:</span>
+                    <strong class="text-slate-900 dark:text-white font-mono">19 Patients</strong>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span>Shift Hours:</span>
+                    <strong class="text-purple-400 font-mono text-[11px]">Tue&ndash;Sat (09:00&ndash;17:00)</strong>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: TREATMENT MANAGEMENT                -->
+        <!-- ========================================== -->
+        <div id="tab-content-treatment-mgmt" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">Clinical Guidelines</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Assign & Update Treatment Protocols</h2>
+              </div>
+              <button onclick="alert('Creating New Protocol Template...')" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs hover:bg-purple-500 transition-colors">
+                + Create Protocol Template
+              </button>
+            </div>
+
+            <div class="space-y-4">
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <h4 class="text-base font-bold text-slate-900 dark:text-white">ACL Post-Op 4-Phase Protocol</h4>
+                  <p class="text-xs text-slate-500">42 Patients Enrolled &bull; Standard 24-Week Trajectory</p>
+                </div>
+                <button onclick="alert('Protocol Template Edit Opened')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Edit Phases</button>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <h4 class="text-base font-bold text-slate-900 dark:text-white">Lumbar Stabilization & Decompression</h4>
+                  <p class="text-xs text-slate-500">31 Patients Enrolled &bull; Standard 12-Week Trajectory</p>
+                </div>
+                <button onclick="alert('Protocol Template Edit Opened')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Edit Phases</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 6: PAYMENT MANAGEMENT                  -->
+        <!-- ========================================== -->
+        <div id="tab-content-payment-mgmt" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Financial Ledger</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Billing Transactions & Insurance Claims</h2>
+              </div>
+              <button onclick="alert('Generating Revenue Report PDF...')" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-colors">
+                Export Ledger PDF
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 dark:bg-[#070b14] text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <tr>
+                    <th class="p-4 rounded-l-xl">Invoice ID</th>
+                    <th class="p-4">Date</th>
+                    <th class="p-4">Patient</th>
+                    <th class="p-4">Amount</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 rounded-r-xl text-right">Receipt</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#INV-2026-088</td>
+                    <td class="p-4">Sep 27, 2026</td>
+                    <td class="p-4">Marcus Vance</td>
+                    <td class="p-4 font-bold">$140.00</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Paid</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Receipt Downloaded')" class="text-emerald-500 font-bold hover:underline">PDF</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 7: CLINIC REPORTS                      -->
+        <!-- ========================================== -->
+        <div id="tab-content-clinic-reports" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">Executive Analytics</div>
+              <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Clinic Performance & Revenue Reports</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="text-xs text-slate-500">Patient Recovery Clearance Rate</div>
+                <div class="text-3xl font-extrabold font-serif-header text-emerald-500">94.2%</div>
+                <div class="text-[11px] text-emerald-500 font-semibold">↑ +3.1% vs target</div>
+              </div>
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="text-xs text-slate-500">Average Rehab Duration</div>
+                <div class="text-3xl font-extrabold font-serif-header text-blue-500">14.2 Weeks</div>
+                <div class="text-[11px] text-blue-500 font-semibold">Optimal clinical outcome</div>
+              </div>
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="text-xs text-slate-500">Patient Satisfaction Score</div>
+                <div class="text-3xl font-extrabold font-serif-header text-amber-500">4.9 / 5.0</div>
+                <div class="text-[11px] text-amber-500 font-semibold">Based on 320 reviews</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- COMPACT FOOTER BAR -->
+      <footer class="bg-white dark:bg-[#0d1322] border-t border-slate-200/80 dark:border-slate-800/80 py-4 px-8 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 mt-auto">
+        <div>&copy; 2026 PhysioCare Admin Clinic Desk. All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-emerald-500">Privacy Policy</a>
+          <span>&bull;</span>
+          <a href="#" class="hover:text-emerald-500">HIPAA Compliant</a>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!--             INTERACTIVE SCRIPTS            -->
+  <!-- ========================================== -->
+  <script>
+    lucide.createIcons();
+
+    function switchTab(tabId) {
+      // 1. Hide all tab content sections
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      // 2. Remove active state from all sidebar buttons
+      document.querySelectorAll('.sidebar-link').forEach(btn => btn.classList.remove('active'));
+      
+      // 3. Show target tab content section
+      const targetContent = document.getElementById(`tab-content-${tabId}`);
+      if (targetContent) {
+        targetContent.classList.remove('hidden');
+      }
+      
+      // 4. Activate all matching navigation buttons (desktop + mobile)
+      document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(btn => btn.classList.add('active'));
+      
+      // 5. Scroll page smooth to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // 6. Close mobile drawer if open
+      closeMobileDrawer();
+    }
+
+    // Mobile Drawer Open / Close
+    function openMobileDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-drawer-backdrop');
+      if (drawer) drawer.classList.remove('-translate-x-full', 'rtl:translate-x-full');
+      if (backdrop) backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeMobileDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-drawer-backdrop');
+      if (drawer) drawer.classList.add('-translate-x-full', 'rtl:translate-x-full');
+      if (backdrop) backdrop.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    // Dark Mode Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      lucide.createIcons();
+    }
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Direction Toggle
+    const rtlToggleBtn = document.getElementById('rtl-toggle-btn');
+    const rtlStatusBadge = document.getElementById('rtl-status-badge');
+    function toggleDirection() {
+      const currentDir = document.documentElement.getAttribute('dir');
+      const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
+      document.documentElement.setAttribute('dir', newDir);
+      localStorage.setItem('dir', newDir);
+      if (rtlStatusBadge) rtlStatusBadge.textContent = newDir.toUpperCase();
+    }
+    if (rtlToggleBtn) rtlToggleBtn.addEventListener('click', toggleDirection);
+    if (localStorage.getItem('dir') === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+      if (rtlStatusBadge) rtlStatusBadge.textContent = 'RTL';
+    }
+
+    // Sticky Header Scroll Elevation Effect
+    window.addEventListener('scroll', () => {
+      const dashHeader = document.getElementById('dashboard-header');
+      if (dashHeader) {
+        if (window.scrollY > 10) {
+          dashHeader.classList.add('shadow-md');
+          dashHeader.classList.remove('shadow-sm');
+        } else {
+          dashHeader.classList.remove('shadow-md');
+          dashHeader.classList.add('shadow-sm');
+        }
+      }
+    });
+
+    // URL Hash listener to open tab directly on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById(`tab-content-${hash}`)) {
+        switchTab(hash);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+

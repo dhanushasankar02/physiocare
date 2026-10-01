@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+  <title>Portal Login &mdash; PhysioCare Rehabilitation</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+              950: '#042f2e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+    <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    html {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    [dir="rtl"] .rtl-flip,
+    [dir="rtl"] [data-lucide="arrow-right"],
+    [dir="rtl"] [data-lucide="chevron-right"],
+    [dir="rtl"] [data-lucide="arrow-left"],
+    [dir="rtl"] [data-lucide="chevron-left"] {
+      transform: scaleX(-1);
+    }
+  </style>
+  <style>
+    *, ::before, ::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    img, video, iframe, svg {
+      max-width: 100%;
+      height: auto;
+    }
+    p, h1, h2, h3, h4, h5, h6 {
+      overflow-wrap: break-word;
+    }
+    header, nav, button, .whitespace-nowrap {
+      white-space: nowrap !important;
+      word-break: normal !important;
+    }
+    @media (max-width: 640px) {
+      .w-full {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .text-3xl { font-size: 1.5rem !important; line-height: 2rem !important; }
+      .text-4xl, .text-5xl { font-size: 1.75rem !important; line-height: 2.25rem !important; }
+      .p-8, .p-10, .p-12 { padding: 1.25rem !important; }
+      .px-8, .px-10, .px-12 { padding-left: 1rem !important; padding-right: 1rem !important; }
+      .py-16, .py-20 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+    }
+    @media (max-width: 320px) {
+      .px-4 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen w-full overflow-x-hidden flex items-center justify-center p-4 py-8">
+
+  <!-- BACKGROUND DECORATIVE GLOW -->
+  <div class="fixed inset-0 z-0 pointer-events-none opacity-30">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-500 rounded-full filter blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl"></div>
+  </div>
+
+  <!-- OUTSIDE TOP RIGHT CONTROLS (DARK MODE, LTR/RTL, MAIN SITE) -->
+  <div class="fixed top-6 right-6 rtl:right-auto rtl:left-6 z-50 flex items-center gap-2.5 whitespace-nowrap flex-shrink-0">
+    
+    <!-- Dark Mode Toggle Button -->
+    <button id="theme-toggle-btn" type="button" title="Toggle Light / Dark Mode" class="p-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-700/80 shadow-lg backdrop-blur-md transition-all flex-shrink-0">
+      <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 hidden dark:block text-amber-300"></i>
+      <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 block dark:hidden text-amber-500"></i>
+    </button>
+
+    <!-- Direction Toggle Button -->
+    <button id="rtl-toggle-btn" type="button" title="Toggle Direction (LTR / RTL)" class="px-3 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-xs font-bold text-slate-300 border border-slate-700/80 shadow-lg backdrop-blur-md transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
+      <i class="fa-solid fa-arrows-left-right-to-line text-brand-400 flex-shrink-0 text-xs"></i>
+      <span id="rtl-status-badge" class="whitespace-nowrap">LTR</span>
+    </button>
+
+    <!-- Main Site Back Button -->
+    <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-xs font-bold text-slate-200 border border-slate-700/80 shadow-lg backdrop-blur-md transition-all whitespace-nowrap flex-shrink-0">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5 rtl-flip text-brand-400 flex-shrink-0"></i>
+      <span class="whitespace-nowrap">Main Site</span>
+    </a>
+
+  </div>
+
+  <!-- FIXED CENTERED LOGIN CONTAINER -->
+  <main class="relative z-10 w-full max-w-4xl rounded-3xl bg-slate-900/95 dark:bg-slate-950/95 border border-slate-800 shadow-2xl backdrop-blur-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 max-h-[92vh]">
+    
+    <!-- LEFT COLUMN: BRANDING BANNER -->
+    <div class="lg:col-span-5 relative bg-slate-950 p-8 flex flex-col justify-between overflow-hidden hidden lg:flex border-r border-slate-800">
+      <div class="absolute inset-0 z-0 opacity-40">
+        <img src="images/services_ortho_recovery.jpg" alt="PhysioCare Clinic" class="w-full h-full object-cover filter brightness-50" />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent z-10"></div>
+
+      <!-- Top Brand Logo -->
+      <a href="index.html" class="relative z-20 flex items-center gap-2.5 group hover:opacity-90 transition-opacity" title="Back to Home">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="activity" class="w-5 h-5"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-extrabold text-white tracking-tight">PhysioCare</span>
+          <span class="text-[9px] font-bold uppercase tracking-widest text-brand-400 -mt-1">Medical &amp; Sports Rehab</span>
+        </div>
+      </a>
+
+      <!-- Center Copy -->
+      <div class="relative z-20 space-y-2">
+        <span class="px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-300 text-[10px] font-bold uppercase tracking-wider">
+          HIPAA Protected Portal
+        </span>
+        <h2 class="text-2xl font-extrabold tracking-tight text-white mt-2">
+          Restoring Health &amp; Athletic Performance
+        </h2>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Access your personalized 4-phase recovery plan, HD video exercises, and clinical appointment schedules.
+        </p>
+      </div>
+
+      <!-- Bottom Feature Bullets -->
+      <div class="relative z-20 space-y-2 pt-4 border-t border-slate-800/80 text-xs text-slate-300">
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
+          <span>Doctor-Monitored Recovery Plans</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
+          <span>HD Video Prescription Library</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: LOGIN FORM CONTAINER -->
+    <div class="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+      
+      <!-- Mobile Logo Header (Only visible on small screens) -->
+      <div class="lg:hidden border-b border-slate-800 pb-4 mb-4">
+        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity" title="Back to Home">
+          <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-slate-950 font-bold group-hover:scale-105 transition-transform">
+            <i data-lucide="activity" class="w-4 h-4"></i>
+          </div>
+          <span class="font-bold text-white text-base">PhysioCare Portal</span>
+        </a>
+      </div>
+
+      <!-- Main Login Form -->
+      <div class="space-y-4">
+        
+        <!-- Role Switcher Tabs -->
+        <div class="flex items-center gap-2 p-1 rounded-xl bg-slate-950 border border-slate-800">
+          <button type="button" id="role-btn-patient" onclick="selectRole('patient')" class="flex-1 py-2 rounded-lg text-xs font-bold text-slate-950 bg-brand-400 shadow transition-all flex items-center justify-center gap-2">
+            <i data-lucide="user" class="w-3.5 h-3.5"></i> Patient Portal
+          </button>
+          <button type="button" id="role-btn-admin" onclick="selectRole('admin')" class="flex-1 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center justify-center gap-2">
+            <i data-lucide="shield" class="w-3.5 h-3.5"></i> Admin / Staff
+          </button>
+        </div>
+
+        <div>
+          <h1 id="login-title" class="text-xl font-extrabold text-white">Patient Sign In</h1>
+          <p id="login-subtitle" class="text-xs text-slate-400">Enter your credentials to access your rehabilitation plan.</p>
+        </div>
+
+        <form id="login-form" onsubmit="handleFormSubmit(event)" class="space-y-3">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+              <input type="email" id="email-input" required placeholder="patient@example.com" value="marcus.vance@example.com" class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" />
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300">Password</label>
+              <a href="#" onclick="alert('Password reset link sent to your registered email.')" class="text-[11px] text-brand-400 font-semibold hover:underline">Forgot Password?</a>
+            </div>
+            <div class="relative">
+              <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+              <input type="password" id="password-input" required value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" class="w-full pl-9 pr-9 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" />
+              <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-white">
+                <i data-lucide="eye" id="eye-icon" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-btn" class="w-full py-2.5 rounded-xl bg-brand-400 hover:bg-brand-300 text-slate-950 font-bold text-xs shadow-lg shadow-brand-500/20 transition-all flex items-center justify-center gap-2 mt-1">
+            <span>Sign In to Patient Portal</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 rtl-flip"></i>
+          </button>
+        </form>
+
+      </div>
+
+      <!-- BOTTOM LINK TO REGISTER -->
+      <div class="pt-3 border-t border-slate-800 text-center text-xs text-slate-400 mt-2">
+        Don't have an account? 
+        <a href="register.html" class="text-brand-400 font-bold hover:underline">Create Account Here &rarr;</a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    lucide.createIcons();
+
+    let currentRole = 'patient';
+
+    function selectRole(role) {
+      currentRole = role;
+      const patientBtn = document.getElementById('role-btn-patient');
+      const adminBtn = document.getElementById('role-btn-admin');
+      const title = document.getElementById('login-title');
+      const subtitle = document.getElementById('login-subtitle');
+      const submitBtn = document.getElementById('submit-btn');
+      const emailInput = document.getElementById('email-input');
+
+      if (role === 'patient') {
+        patientBtn.className = 'flex-1 py-2 rounded-lg text-xs font-bold text-slate-950 bg-brand-400 shadow transition-all flex items-center justify-center gap-2';
+        adminBtn.className = 'flex-1 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center justify-center gap-2';
+        title.textContent = 'Patient Sign In';
+        subtitle.textContent = 'Enter your credentials to access your rehabilitation plan.';
+        submitBtn.querySelector('span').textContent = 'Sign In to Patient Portal';
+        emailInput.value = 'marcus.vance@example.com';
+      } else {
+        adminBtn.className = 'flex-1 py-2 rounded-lg text-xs font-bold text-slate-950 bg-emerald-400 shadow transition-all flex items-center justify-center gap-2';
+        patientBtn.className = 'flex-1 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center justify-center gap-2';
+        title.textContent = 'Staff / Admin Sign In';
+        subtitle.textContent = 'Enter clinic staff credentials to access administrative desk.';
+        submitBtn.querySelector('span').textContent = 'Sign In to Admin Portal';
+        emailInput.value = 'r.hayes@physiocare.com';
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      if (currentRole === 'patient') {
+        window.location.href = 'user-dashboard.html';
+      } else {
+        window.location.href = 'admin-dashboard.html';
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password-input');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    }
+
+    // Dark Mode
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      lucide.createIcons();
+    }
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Direction Toggle
+    const rtlToggleBtn = document.getElementById('rtl-toggle-btn');
+    const rtlStatusBadge = document.getElementById('rtl-status-badge');
+    function toggleDirection() {
+      const currentDir = document.documentElement.getAttribute('dir');
+      const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
+      document.documentElement.setAttribute('dir', newDir);
+      localStorage.setItem('dir', newDir);
+      if (rtlStatusBadge) rtlStatusBadge.textContent = newDir.toUpperCase();
+    }
+    if (rtlToggleBtn) rtlToggleBtn.addEventListener('click', toggleDirection);
+    if (localStorage.getItem('dir') === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+      if (rtlStatusBadge) rtlStatusBadge.textContent = 'RTL';
+    }
+  </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+  <title>Patient Dashboard &mdash; PhysioCare Rehabilitation</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+              950: '#042f2e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+    <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-serif-header {
+      font-family: 'Playfair Display', serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0d9488;
+      border-radius: 9999px;
+    }
+    html {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    [dir="rtl"] .rtl-flip,
+    [dir="rtl"] [data-lucide="arrow-right"],
+    [dir="rtl"] [data-lucide="chevron-right"],
+    [dir="rtl"] [data-lucide="arrow-left"],
+    [dir="rtl"] [data-lucide="chevron-left"] {
+      transform: scaleX(-1);
+    }
+    .sidebar-link.active {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+    .dark .sidebar-link.active {
+      background-color: #3b82f6;
+      color: #ffffff;
+    }
+    .mobile-drawer {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+  <style>
+    *, ::before, ::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    img, video, iframe, svg {
+      max-width: 100%;
+      height: auto;
+    }
+    p, h1, h2, h3, h4, h5, h6 {
+      overflow-wrap: break-word;
+    }
+    header, nav, button, .whitespace-nowrap {
+      white-space: nowrap !important;
+      word-break: normal !important;
+    }
+    @media (max-width: 640px) {
+      .w-full {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .text-3xl { font-size: 1.5rem !important; line-height: 2rem !important; }
+      .text-4xl, .text-5xl { font-size: 1.75rem !important; line-height: 2.25rem !important; }
+      .p-8, .p-10, .p-12 { padding: 1.25rem !important; }
+      .px-8, .px-10, .px-12 { padding-left: 1rem !important; padding-right: 1rem !important; }
+      .py-16, .py-20 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+    }
+    @media (max-width: 320px) {
+      .px-4 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 dark:bg-[#090d16] dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen">
+
+  <div class="flex min-h-screen overflow-x-hidden">
+    
+    <!-- ========================================== -->
+    <!-- 1. LEFT SIDEBAR NAVIGATION (DESKTOP)       -->
+    <!-- ========================================== -->
+    <aside id="sidebar-desktop" class="hidden lg:flex flex-col w-64 xl:w-72 bg-[#0a101d] dark:bg-[#070b14] text-slate-300 border-r border-slate-800 flex-shrink-0 justify-between p-5 sticky top-0 h-screen z-40">
+      
+      <div class="space-y-8">
+        
+        <!-- Brand Logo Header -->
+        <a href="index.html" class="flex items-center gap-3 px-2 pt-1 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-brand-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-extrabold text-white tracking-tight">PhysioCare</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-400 -mt-1">USER REHAB DESK</span>
+          </div>
+        </a>
+
+        <!-- Section 1: MAIN MENU -->
+        <div class="space-y-2">
+          <div class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Main Menu</div>
+          <nav class="space-y-1">
+            
+            <button onclick="switchTab('overview')" data-tab="overview" id="nav-btn-overview" class="sidebar-link active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <span>Dashboard Overview</span>
+              </span>
+            </button>
+
+            <button onclick="switchTab('upcoming-therapy')" data-tab="upcoming-therapy" id="nav-btn-upcoming-therapy" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+                <span>Upcoming Therapy</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold">1 Active</span>
+            </button>
+
+            <button onclick="switchTab('treatment-plan')" data-tab="treatment-plan" id="nav-btn-treatment-plan" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                <span>Treatment Plan</span>
+              </span>
+            </button>
+
+            <button onclick="switchTab('exercise-library')" data-tab="exercise-library" id="nav-btn-exercise-library" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="video" class="w-4 h-4"></i>
+                <span>Exercise Library</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-bold">12</span>
+            </button>
+
+            <button onclick="switchTab('recovery-progress')" data-tab="recovery-progress" id="nav-btn-recovery-progress" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="line-chart" class="w-4 h-4"></i>
+                <span>Recovery Progress</span>
+              </span>
+            </button>
+
+          </nav>
+        </div>
+
+        <!-- Section 2: ACCOUNT & SERVICES -->
+        <div class="space-y-2">
+          <div class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Account & Services</div>
+          <nav class="space-y-1">
+            
+            <button onclick="switchTab('payment-receipts')" data-tab="payment-receipts" id="nav-btn-payment-receipts" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                <span>Payment & Receipts</span>
+              </span>
+            </button>
+
+            <button onclick="switchTab('patient-profile')" data-tab="patient-profile" id="nav-btn-patient-profile" class="sidebar-link w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors">
+              <span class="flex items-center gap-3">
+                <i data-lucide="user-cog" class="w-4 h-4"></i>
+                <span>Patient Profile</span>
+              </span>
+            </button>
+
+            <a href="index.html" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors pt-2">
+              <i data-lucide="home" class="w-4 h-4 text-brand-400"></i>
+              <span>Back to Main Website</span>
+            </a>
+
+          </nav>
+        </div>
+
+      </div>
+
+      <!-- Bottom User Profile Card -->
+      <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+        <button onclick="switchTab('patient-profile')" class="flex items-center gap-3 text-left focus:outline-none">
+          <div class="w-9 h-9 rounded-xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-sm shadow">
+            MV
+          </div>
+          <div>
+            <div class="text-xs font-bold text-white hover:text-amber-400 transition-colors">Marcus Vance</div>
+            <div class="text-[10px] text-amber-400 font-semibold">ACL Rehab Active</div>
+          </div>
+        </button>
+        <a href="index.html" title="Exit Dashboard" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- MOBILE DRAWER SIDEBAR                      -->
+    <!-- ========================================== -->
+    <div id="mobile-drawer-backdrop" onclick="closeMobileDrawer()" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+
+    <aside id="mobile-drawer" class="mobile-drawer fixed top-0 left-0 rtl:left-auto rtl:right-0 z-50 w-72 max-w-[85vw] h-full bg-[#0a101d] text-slate-300 border-r rtl:border-r-0 rtl:border-l border-slate-800 shadow-2xl flex flex-col justify-between p-5 -translate-x-full rtl:translate-x-full lg:hidden overflow-y-auto">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-teal-400 flex items-center justify-center text-white">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold text-white">PhysioCare Portal</span>
+          </div>
+          <button onclick="closeMobileDrawer()" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <nav class="space-y-1 text-xs">
+          <button onclick="switchTab('overview')" data-tab="overview" class="sidebar-link active w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard Overview
+          </button>
+          <button onclick="switchTab('upcoming-therapy')" data-tab="upcoming-therapy" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="calendar" class="w-4 h-4"></i> Upcoming Therapy
+          </button>
+          <button onclick="switchTab('treatment-plan')" data-tab="treatment-plan" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="clipboard-list" class="w-4 h-4"></i> Treatment Plan
+          </button>
+          <button onclick="switchTab('exercise-library')" data-tab="exercise-library" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="video" class="w-4 h-4"></i> Exercise Library
+          </button>
+          <button onclick="switchTab('recovery-progress')" data-tab="recovery-progress" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="line-chart" class="w-4 h-4"></i> Recovery Progress
+          </button>
+          <button onclick="switchTab('payment-receipts')" data-tab="payment-receipts" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="credit-card" class="w-4 h-4"></i> Payment & Receipts
+          </button>
+          <button onclick="switchTab('patient-profile')" data-tab="patient-profile" class="sidebar-link w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-300 hover:bg-slate-800">
+            <i data-lucide="user-cog" class="w-4 h-4"></i> Patient Profile
+          </button>
+          <a href="index.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-slate-400 hover:text-white hover:bg-slate-800 pt-2">
+            <i data-lucide="home" class="w-4 h-4 text-brand-400"></i> Back to Main Website
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- 2. RIGHT CONTENT AREA                      -->
+    <!-- ========================================== -->
+    <div class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] dark:bg-[#090d16]">
+      
+      <!-- TOP HEADER BAR (STICKY) -->
+      <header id="dashboard-header" class="sticky top-0 z-50 h-16 px-4 sm:px-8 bg-white/95 dark:bg-[#0d1322]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between shadow-sm transition-all duration-200">
+        
+        <!-- Left Search & Mobile Toggle -->
+        <div class="flex items-center gap-3 flex-1 max-w-md">
+          <button onclick="openMobileDrawer()" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+          <div class="relative w-full">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-slate-400"></i>
+            <input type="text" id="dashboard-search-input" placeholder="Search exercises, therapy notes, payments..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border-0 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 placeholder-slate-400" />
+          </div>
+        </div>
+
+        <!-- Right Controls -->
+        <div class="flex items-center gap-3">
+          
+          <div class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Rehab Protocol Active
+          </div>
+
+          <button onclick="switchTab('upcoming-therapy')" title="View Upcoming Appointments" class="relative p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-amber-500"></span>
+          </button>
+
+          <button id="theme-toggle-btn" type="button" title="Toggle Light / Dark Mode" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors">
+            <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 hidden dark:block text-amber-300"></i>
+            <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 block dark:hidden text-amber-500"></i>
+          </button>
+
+          <button id="rtl-toggle-btn" type="button" title="Toggle Direction (LTR / RTL)" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors">
+            <i data-lucide="languages" class="w-3.5 h-3.5 text-brand-500"></i>
+            <span id="rtl-status-badge">LTR</span>
+          </button>
+
+        </div>
+
+      </header>
+
+      <!-- MAIN CONTENT PANEL -->
+      <main class="flex-grow p-4 sm:p-8 space-y-8 max-w-7xl w-full mx-auto">
+        
+        <!-- ========================================== -->
+        <!-- TAB 1: PATIENT OVERVIEW                    -->
+        <!-- ========================================== -->
+        <div id="tab-content-overview" class="tab-content space-y-8">
+          
+          <!-- DASHBOARD HERO BANNER (ONLY INSIDE DASHBOARD OVERVIEW) -->
+          <div class="relative rounded-3xl bg-[#090f1d] border border-slate-800 text-white p-6 sm:p-10 shadow-2xl overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              
+              <div class="space-y-3 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800 text-emerald-300 text-[11px] font-extrabold uppercase tracking-wider">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  PATIENT PORTAL &bull; KNEE ACL RECOVERY ACTIVE
+                </div>
+                
+                <h1 class="text-3xl sm:text-4xl font-extrabold font-serif-header tracking-tight text-amber-100">
+                  Welcome Back, <span class="text-amber-400">Marcus Vance</span>
+                </h1>
+
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Your knee recovery protocol is encrypted and monitored directly by Dr. Sarah Jenkins. You have 1 scheduled therapy session tomorrow and 4 active home exercises ready.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-3">
+                <a href="contact.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs shadow-xl shadow-amber-500/20 transition-all flex-shrink-0">
+                  <i data-lucide="plus" class="w-4 h-4"></i> Book New Session
+                </a>
+                <button onclick="switchTab('exercise-library')" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all">
+                  <i data-lucide="play-circle" class="w-4 h-4 text-brand-400"></i> My Exercises
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 4 METRIC SUMMARY CARDS (ONLY INSIDE DASHBOARD OVERVIEW) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- Card 1 -->
+            <div onclick="switchTab('recovery-progress')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-blue-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-blue-500 transition-colors">Active Recovery Progress</span>
+                <div class="w-8 h-8 rounded-lg bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                  <i data-lucide="activity" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-slate-900 dark:text-white">68%</div>
+              <div class="text-[11px] text-emerald-500 font-semibold flex items-center gap-1">
+                <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +12% updated this month &rarr;
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div onclick="switchTab('recovery-progress')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-amber-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-amber-500 transition-colors">Knee Flexion Range</span>
+                <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                  <i data-lucide="compass" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-amber-600 dark:text-amber-400">125&deg;</div>
+              <div class="text-[11px] text-slate-500 font-semibold">
+                Target 135&deg; Active Goal &rarr;
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div onclick="switchTab('exercise-library')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-teal-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-teal-500 transition-colors">Prescribed Exercises</span>
+                <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center">
+                  <i data-lucide="video" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-teal-600 dark:text-teal-400">42 / 50</div>
+              <div class="text-[11px] text-teal-500 font-semibold">
+                84% Monthly Completion &rarr;
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div onclick="switchTab('upcoming-therapy')" class="p-6 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-sky-500 hover:shadow-md cursor-pointer transition-all space-y-2 group">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-bold group-hover:text-sky-500 transition-colors">Next Session</span>
+                <div class="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+                  <i data-lucide="calendar" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="text-3xl font-extrabold font-serif-header text-slate-900 dark:text-white">Tomorrow</div>
+              <div class="text-[11px] text-sky-500 font-semibold">
+                10:00 AM with Dr. Sarah &rarr;
+              </div>
+            </div>
+
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-8 space-y-8">
+              
+              <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Current Recovery Status</div>
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Phase 3: Hypertrophy & Control</h3>
+                  </div>
+                  <button onclick="switchTab('treatment-plan')" class="px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-bold hover:underline">
+                    View Full Plan &rarr;
+                  </button>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                    <span>Phase Completion Target (Week 8 of 12)</span>
+                    <span class="text-brand-600 dark:text-brand-400">68%</span>
+                  </div>
+                  <div class="w-full h-3 rounded-full bg-slate-100 dark:bg-slate-900 overflow-hidden">
+                    <div class="h-full rounded-full bg-gradient-to-r from-blue-600 to-teal-400" style="width: 68%;"></div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                  <div onclick="switchTab('recovery-progress')" class="p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-1 cursor-pointer hover:border-brand-500 transition-colors">
+                    <div class="text-xs text-slate-500">Quad Strength Deficit</div>
+                    <div class="text-lg font-bold text-slate-900 dark:text-white">12% (Target: &lt;10%)</div>
+                    <div class="text-[11px] text-emerald-500 font-semibold">Ã¢ÂÂ -8% last 2 weeks</div>
+                  </div>
+                  <div onclick="switchTab('recovery-progress')" class="p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-1 cursor-pointer hover:border-brand-500 transition-colors">
+                    <div class="text-xs text-slate-500">Pain Level (VAS Scale)</div>
+                    <div class="text-lg font-bold text-slate-900 dark:text-white">1 / 10 (Mild)</div>
+                    <div class="text-[11px] text-teal-500 font-semibold">Normal post-workout</div>
+                  </div>
+                  <div onclick="switchTab('recovery-progress')" class="p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-1 cursor-pointer hover:border-brand-500 transition-colors">
+                    <div class="text-xs text-slate-500">Gait Symmetry</div>
+                    <div class="text-lg font-bold text-slate-900 dark:text-white">94% Normal</div>
+                    <div class="text-[11px] text-brand-500 font-semibold">Cleared for light jog</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <i data-lucide="check-square" class="w-5 h-5 text-brand-500"></i>
+                      Today's Prescribed Exercises
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Complete home exercises before 8:00 PM</p>
+                  </div>
+                  <button onclick="switchTab('exercise-library')" class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline">
+                    View Video Library &rarr;
+                  </button>
+                </div>
+
+                <div class="space-y-3">
+                  <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 cursor-pointer hover:border-brand-500 transition-colors">
+                    <div class="flex items-center gap-3">
+                      <input type="checkbox" checked class="w-5 h-5 rounded text-brand-500 focus:ring-brand-500" />
+                      <div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white line-through opacity-70">Single-Leg Squats with TRX Support</div>
+                        <div class="text-xs text-slate-500">3 Sets x 12 Reps per leg</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-semibold text-emerald-500">Done at 8:30 AM</span>
+                  </label>
+
+                  <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 cursor-pointer hover:border-brand-500 transition-colors">
+                    <div class="flex items-center gap-3">
+                      <input type="checkbox" checked class="w-5 h-5 rounded text-brand-500 focus:ring-brand-500" />
+                      <div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white line-through opacity-70">Bosu Ball Balance Single-Leg Stance</div>
+                        <div class="text-xs text-slate-500">4 Sets x 45 Seconds holds</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-semibold text-emerald-500">Done at 8:50 AM</span>
+                  </label>
+
+                  <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 cursor-pointer hover:border-brand-500 transition-colors">
+                    <div class="flex items-center gap-3">
+                      <input type="checkbox" checked class="w-5 h-5 rounded text-brand-500 focus:ring-brand-500" />
+                      <div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white line-through opacity-70">Resistance Loop Lateral Monster Walks</div>
+                        <div class="text-xs text-slate-500">3 Sets x 15 Paces right & left</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-semibold text-emerald-500">Done at 9:15 AM</span>
+                  </label>
+
+                  <label class="flex items-center justify-between p-4 rounded-2xl bg-brand-50/50 dark:bg-brand-950/30 border border-brand-200 dark:border-brand-800 cursor-pointer">
+                    <div class="flex items-center gap-3">
+                      <input type="checkbox" class="w-5 h-5 rounded text-brand-500 focus:ring-brand-500" />
+                      <div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white">Post-Workout Ice Pack & Elevation</div>
+                        <div class="text-xs text-slate-600 dark:text-slate-400">20 Minutes cold compression</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-bold text-amber-500">Pending</span>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="lg:col-span-4 space-y-8">
+              
+              <div class="p-6 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Assigned Specialist</div>
+                <div class="flex items-center gap-4">
+                  <img src="images/therapist_dr_david_chen.jpg" alt="Dr. Sarah Jenkins" class="w-16 h-16 rounded-2xl object-cover border-2 border-brand-500" />
+                  <div>
+                    <h4 class="text-base font-bold text-slate-900 dark:text-white">Dr. Sarah Jenkins, DPT</h4>
+                    <div class="text-xs text-brand-600 dark:text-brand-400 font-semibold">Lead Orthopedic Specialist</div>
+                    <div class="text-[11px] text-slate-500 mt-1">12 Years Experience</div>
+                  </div>
+                </div>
+
+                <div class="space-y-3 pt-2 text-xs">
+                  <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#070b14] text-slate-600 dark:text-slate-300">
+                    <span class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-brand-500"></i> Clinic Desk</span>
+                    <strong class="text-slate-900 dark:text-white">Ext. 402</strong>
+                  </div>
+                  <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#070b14] text-slate-600 dark:text-slate-300">
+                    <span class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-brand-500"></i> Direct Mail</span>
+                    <strong class="text-slate-900 dark:text-white">s.jenkins@physiocare.com</strong>
+                  </div>
+                </div>
+
+                <a href="contact.html" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs border border-slate-700 transition-colors">
+                  <i data-lucide="message-square" class="w-4 h-4 text-brand-400"></i> Message Doctor
+                </a>
+              </div>
+
+              <div class="p-6 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Recent Activity</h4>
+                <div class="space-y-4 text-xs">
+                  <div onclick="switchTab('recovery-progress')" class="flex gap-3 cursor-pointer group">
+                    <div class="w-2 h-2 rounded-full bg-brand-500 mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <div class="font-bold text-slate-900 dark:text-white group-hover:text-brand-400 transition-colors">Strength Screening Completed</div>
+                      <div class="text-slate-500">Yesterday at 2:30 PM &bull; Quad output +5%</div>
+                    </div>
+                  </div>
+                  <div onclick="switchTab('exercise-library')" class="flex gap-3 cursor-pointer group">
+                    <div class="w-2 h-2 rounded-full bg-teal-500 mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <div class="font-bold text-slate-900 dark:text-white group-hover:text-teal-400 transition-colors">Prescription Updated</div>
+                      <div class="text-slate-500">2 Days ago &bull; Added Single-Leg TRX Squat</div>
+                    </div>
+                  </div>
+                  <div onclick="switchTab('payment-receipts')" class="flex gap-3 cursor-pointer group">
+                    <div class="w-2 h-2 rounded-full bg-sky-500 mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <div class="font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">Invoice #INV-2026-088 Paid</div>
+                      <div class="text-slate-500">3 Days ago &bull; $140.00 (Copay)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: UPCOMING THERAPY                    -->
+        <!-- ========================================== -->
+        <div id="tab-content-upcoming-therapy" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Appointment Schedule</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Upcoming Rehabilitation Sessions</h2>
+              </div>
+              <a href="contact.html" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold hover:bg-amber-400 transition-colors">
+                + Book New Session
+              </a>
+            </div>
+
+            <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-[#0b1329] border border-brand-500/40 text-white space-y-6 shadow-2xl relative overflow-hidden">
+              <div class="relative z-10 flex items-center justify-between flex-wrap gap-4">
+                <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-400"></i> Confirmed Next Session</span>
+                <span class="text-xs text-slate-400 font-semibold">Ref: #APT-99201</span>
+              </div>
+
+              <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <div class="text-xs text-slate-400">Date & Time</div>
+                  <div class="text-xl font-black text-white mt-1">Thursday, Oct 1, 2026</div>
+                  <div class="text-sm font-bold text-amber-400 mt-0.5">10:00 AM &ndash; 11:00 AM (60 Mins)</div>
+                </div>
+
+                <div>
+                  <div class="text-xs text-slate-400">Therapist & Focus</div>
+                  <div class="text-xl font-bold text-white mt-1">Dr. Sarah Jenkins, DPT</div>
+                  <div class="text-xs text-slate-300 mt-0.5">Isokinetic Strength Testing & Laser</div>
+                </div>
+
+                <div>
+                  <div class="text-xs text-slate-400">Location</div>
+                  <div class="text-xl font-bold text-white mt-1">PhysioCare Tower</div>
+                  <div class="text-xs text-teal-300 mt-0.5">Suite 400 &bull; Rehab Bay 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 dark:bg-[#070b14] text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <tr>
+                    <th class="p-4 rounded-l-xl">Date & Time</th>
+                    <th class="p-4">Therapist</th>
+                    <th class="p-4">Session Type</th>
+                    <th class="p-4">Location</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 rounded-r-xl text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">Oct 6, 2026 at 2:00 PM</td>
+                    <td class="p-4">Dr. Sarah Jenkins</td>
+                    <td class="p-4">Phase 3 Agility & Perturbation</td>
+                    <td class="p-4">Main Rehab Gym</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 font-bold">Scheduled</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Session details ref #APT-99202 loaded')" class="text-brand-600 dark:text-brand-400 font-bold hover:underline">View Details</button></td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">Oct 12, 2026 at 10:00 AM</td>
+                    <td class="p-4">Michael Ross, PT</td>
+                    <td class="p-4">Laser Therapy & Manual Release</td>
+                    <td class="p-4">Therapy Suite 4B</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 font-bold">Scheduled</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Session details ref #APT-99203 loaded')" class="text-brand-600 dark:text-brand-400 font-bold hover:underline">View Details</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: TREATMENT PLAN                      -->
+        <!-- ========================================== -->
+        <div id="tab-content-treatment-plan" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Assigned Rehabilitation Plan</div>
+              <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Right ACL Post-Op Protocol (4-Phase Plan)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              
+              <!-- Phase 1 -->
+              <div class="p-5 rounded-2xl bg-slate-100 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-3 opacity-90 hover:opacity-100 transition-opacity">
+                <div class="space-y-2 border-b border-slate-200/60 dark:border-slate-800/80 pb-3">
+                  <div class="flex items-center justify-between text-[11px] font-mono font-bold text-slate-400">
+                    <span class="uppercase tracking-wider">Phase 1</span>
+                    <span>Weeks 0&ndash;3</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase tracking-wider">
+                      <i data-lucide="check-circle-2" class="w-3 h-3"></i> Completed
+                    </span>
+                  </div>
+                </div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Protection &amp; Healing</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Swelling control, full knee extension (0&deg;), gentle quad activation.</p>
+              </div>
+
+              <!-- Phase 2 -->
+              <div class="p-5 rounded-2xl bg-slate-100 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-3 opacity-90 hover:opacity-100 transition-opacity">
+                <div class="space-y-2 border-b border-slate-200/60 dark:border-slate-800/80 pb-3">
+                  <div class="flex items-center justify-between text-[11px] font-mono font-bold text-slate-400">
+                    <span class="uppercase tracking-wider">Phase 2</span>
+                    <span>Weeks 4&ndash;7</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase tracking-wider">
+                      <i data-lucide="check-circle-2" class="w-3 h-3"></i> Completed
+                    </span>
+                  </div>
+                </div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Weight Bearing</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Normal gait without crutches, 120&deg; flexion, closed-chain squats.</p>
+              </div>
+
+              <!-- Phase 3 (Active) -->
+              <div class="p-5 rounded-2xl bg-brand-50/90 dark:bg-brand-950/70 border-2 border-brand-500 space-y-3 shadow-lg relative overflow-hidden">
+                <div class="space-y-2 border-b border-brand-200 dark:border-brand-900/60 pb-3">
+                  <div class="flex items-center justify-between text-[11px] font-mono font-bold text-brand-600 dark:text-brand-400">
+                    <span class="uppercase tracking-wider">Phase 3</span>
+                    <span>Weeks 8&ndash;14</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-brand-500 text-slate-950 font-bold text-[10px] uppercase tracking-wider shadow-sm">
+                      <i data-lucide="flame" class="w-3 h-3 text-slate-950"></i> Active Phase
+                    </span>
+                  </div>
+                </div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Hypertrophy &amp; Strength</h4>
+                <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">Single-leg stability, hamstring-quad balance, light jog progression.</p>
+              </div>
+
+              <!-- Phase 4 -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-3">
+                <div class="space-y-2 border-b border-slate-200/60 dark:border-slate-800/80 pb-3">
+                  <div class="flex items-center justify-between text-[11px] font-mono font-bold text-slate-400">
+                    <span class="uppercase tracking-wider">Phase 4</span>
+                    <span>Weeks 15&ndash;24</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-[10px] uppercase tracking-wider">
+                      <i data-lucide="clock" class="w-3 h-3"></i> Upcoming
+                    </span>
+                  </div>
+                </div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Return to Sport</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">High-velocity cutting, jumping drills, sport-specific practice clearance.</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: EXERCISE LIBRARY                    -->
+        <!-- ========================================== -->
+        <div id="tab-content-exercise-library" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Prescribed Videos</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Home Video Exercises</h2>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <div class="rounded-2xl overflow-hidden bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 group hover:border-brand-500 transition-all">
+                <div class="relative h-44 overflow-hidden bg-slate-900">
+                  <img src="images/athlete_story_1.jpg" alt="TRX Squat" class="w-full h-full object-cover group-hover:scale-105 transition-transform opacity-80" />
+                  <button onclick="openVideoModal('Single-Leg TRX Assisted Squats', '3 Sets x 12 Reps', 'Keep knee aligned over second toe. Maintain upright posture.')" class="absolute inset-0 flex items-center justify-center bg-slate-950/40">
+                    <div class="w-14 h-14 rounded-full bg-brand-500 text-slate-950 flex items-center justify-center shadow-lg">
+                      <i data-lucide="play" class="w-7 h-7 fill-current ml-0.5"></i>
+                    </div>
+                  </button>
+                </div>
+                <div class="p-4 space-y-2">
+                  <span class="px-2 py-0.5 rounded bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-bold text-[11px]">Phase 3</span>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white">Single-Leg TRX Squats</h4>
+                  <p class="text-xs text-slate-500">3 Sets x 12 Reps</p>
+                </div>
+              </div>
+
+              <div class="rounded-2xl overflow-hidden bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 group hover:border-brand-500 transition-all">
+                <div class="relative h-44 overflow-hidden bg-slate-900">
+                  <img src="images/athlete_story_2.jpg" alt="Bosu Balance" class="w-full h-full object-cover group-hover:scale-105 transition-transform opacity-80" />
+                  <button onclick="openVideoModal('Bosu Ball Single-Leg Proprioception', '4 Sets x 45 Secs', 'Engage core and maintain micro-flexion in knee.')" class="absolute inset-0 flex items-center justify-center bg-slate-950/40">
+                    <div class="w-14 h-14 rounded-full bg-brand-500 text-slate-950 flex items-center justify-center shadow-lg">
+                      <i data-lucide="play" class="w-7 h-7 fill-current ml-0.5"></i>
+                    </div>
+                  </button>
+                </div>
+                <div class="p-4 space-y-2">
+                  <span class="px-2 py-0.5 rounded bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-bold text-[11px]">Phase 3</span>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white">Bosu Single-Leg Stance</h4>
+                  <p class="text-xs text-slate-500">4 Sets x 45 Secs</p>
+                </div>
+              </div>
+
+              <div class="rounded-2xl overflow-hidden bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 group hover:border-brand-500 transition-all">
+                <div class="relative h-44 overflow-hidden bg-slate-900">
+                  <img src="images/sports_return_to_play_cert.jpg" alt="Monster Walks" class="w-full h-full object-cover group-hover:scale-105 transition-transform opacity-80" />
+                  <button onclick="openVideoModal('Resistance Loop Monster Walks', '3 Sets x 15 Paces', 'Place band above knees. Maintain constant tension.')" class="absolute inset-0 flex items-center justify-center bg-slate-950/40">
+                    <div class="w-14 h-14 rounded-full bg-brand-500 text-slate-950 flex items-center justify-center shadow-lg">
+                      <i data-lucide="play" class="w-7 h-7 fill-current ml-0.5"></i>
+                    </div>
+                  </button>
+                </div>
+                <div class="p-4 space-y-2">
+                  <span class="px-2 py-0.5 rounded bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-bold text-[11px]">Phase 3</span>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white">Monster Walks</h4>
+                  <p class="text-xs text-slate-500">3 Sets x 15 Paces</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: RECOVERY PROGRESS                   -->
+        <!-- ========================================== -->
+        <div id="tab-content-recovery-progress" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Progress Measurements</div>
+              <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Biomechanical Recovery Charts</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-4">
+                <div class="flex justify-between items-center">
+                  <h4 class="text-base font-bold text-slate-900 dark:text-white">Knee Flexion ROM (&deg; Degrees)</h4>
+                  <span class="text-xs font-bold text-emerald-500">125&deg; (Goal: 135&deg;)</span>
+                </div>
+                <div class="space-y-3 pt-2">
+                  <div>
+                    <div class="flex justify-between text-xs text-slate-500 mb-1"><span>Week 8 (Current)</span><span class="text-brand-500">125&deg;</span></div>
+                    <div class="w-full h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden"><div class="h-full bg-emerald-400" style="width: 92%;"></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-[#070b14] border border-slate-200/80 dark:border-slate-800 space-y-4">
+                <div class="flex justify-between items-center">
+                  <h4 class="text-base font-bold text-slate-900 dark:text-white">Limb Symmetry Index (LSI %)</h4>
+                  <span class="text-xs font-bold text-teal-500">88% (Goal: 95%)</span>
+                </div>
+                <div class="space-y-3 pt-2">
+                  <div>
+                    <div class="flex justify-between text-xs text-slate-500 mb-1"><span>Week 8 (Current)</span><span class="text-teal-400">88%</span></div>
+                    <div class="w-full h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden"><div class="h-full bg-teal-400" style="width: 88%;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 6: PAYMENT & RECEIPTS                 -->
+        <!-- ========================================== -->
+        <div id="tab-content-payment-receipts" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Financial Records</div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Payment History & Receipts</h2>
+              </div>
+              <button onclick="alert('Downloading annual statement PDF...')" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors">
+                Download PDF Summary
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 dark:bg-[#070b14] text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <tr>
+                    <th class="p-4 rounded-l-xl">Invoice ID</th>
+                    <th class="p-4">Date</th>
+                    <th class="p-4">Description</th>
+                    <th class="p-4">Amount</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 rounded-r-xl text-right">Receipt</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                  <tr>
+                    <td class="p-4 font-bold text-slate-900 dark:text-white">#INV-2026-088</td>
+                    <td class="p-4">Sep 27, 2026</td>
+                    <td class="p-4">Isokinetic Screening + Laser</td>
+                    <td class="p-4 font-bold">$140.00</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">Paid</span></td>
+                    <td class="p-4 text-right"><button onclick="alert('Receipt PDF downloaded')" class="text-brand-600 font-bold hover:underline">PDF</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 7: PATIENT PROFILE                     -->
+        <!-- ========================================== -->
+        <div id="tab-content-patient-profile" class="tab-content hidden space-y-8">
+          
+          <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Account Settings</div>
+              <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Patient Profile Information</h2>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Profile updated!');" class="space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mb-2">First Name</label>
+                  <input type="text" value="Marcus" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mb-2">Last Name</label>
+                  <input type="text" value="Vance" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 text-sm" />
+                </div>
+              </div>
+
+              <button type="submit" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-colors">
+                Save Changes
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- COMPACT FOOTER BAR -->
+      <footer class="bg-white dark:bg-[#0d1322] border-t border-slate-200/80 dark:border-slate-800/80 py-4 px-8 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 mt-auto">
+        <div>&copy; 2026 PhysioCare User Rehab Desk. All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-brand-500">Privacy</a>
+          <span>&bull;</span>
+          <a href="#" class="hover:text-brand-500">HIPAA Compliant</a>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- VIDEO MODAL POPUP -->
+  <div id="video-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 space-y-6 shadow-2xl relative">
+      <button onclick="closeVideoModal()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-white">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="relative h-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-950 flex items-center justify-center">
+        <img src="images/athlete_assessment_zone.jpg" alt="Video player frame" class="w-full h-full object-cover opacity-60" />
+        <div class="absolute inset-0 flex flex-col items-center justify-center space-y-3">
+          <div class="w-16 h-16 rounded-full bg-brand-500 text-slate-950 flex items-center justify-center shadow-xl animate-pulse">
+            <i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+          </div>
+          <span class="text-xs font-bold text-white bg-slate-950/80 px-3 py-1 rounded-full border border-slate-700">Simulated HD Video Playback</span>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <h3 id="modal-video-title" class="text-xl font-extrabold text-slate-900 dark:text-white">Exercise Title</h3>
+        <p id="modal-video-reps" class="text-xs font-bold text-brand-500">3 Sets x 12 Reps</p>
+        <p id="modal-video-instruction" class="text-xs text-slate-600 dark:text-slate-300">Instruction details</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!--             INTERACTIVE SCRIPTS            -->
+  <!-- ========================================== -->
+  <script>
+    lucide.createIcons();
+
+    function switchTab(tabId) {
+      // 1. Hide all tab content sections
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      // 2. Remove active state from all sidebar buttons
+      document.querySelectorAll('.sidebar-link').forEach(btn => btn.classList.remove('active'));
+      
+      // 3. Show target tab content section
+      const targetContent = document.getElementById(`tab-content-${tabId}`);
+      if (targetContent) {
+        targetContent.classList.remove('hidden');
+      }
+      
+      // 4. Activate all matching navigation buttons (desktop + mobile)
+      document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(btn => btn.classList.add('active'));
+      
+      // 5. Scroll page smooth to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // 6. Close mobile drawer if open
+      closeMobileDrawer();
+    }
+
+    // Mobile Drawer Open / Close
+    function openMobileDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-drawer-backdrop');
+      if (drawer) drawer.classList.remove('-translate-x-full', 'rtl:translate-x-full');
+      if (backdrop) backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeMobileDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-drawer-backdrop');
+      if (drawer) drawer.classList.add('-translate-x-full', 'rtl:translate-x-full');
+      if (backdrop) backdrop.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function openVideoModal(title, reps, instruction) {
+      document.getElementById('modal-video-title').textContent = title;
+      document.getElementById('modal-video-reps').textContent = reps;
+      document.getElementById('modal-video-instruction').textContent = instruction;
+      document.getElementById('video-modal').classList.remove('hidden');
+    }
+
+    function closeVideoModal() {
+      document.getElementById('video-modal').classList.add('hidden');
+    }
+
+    // Dark Mode Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      lucide.createIcons();
+    }
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Direction Toggle
+    const rtlToggleBtn = document.getElementById('rtl-toggle-btn');
+    const rtlStatusBadge = document.getElementById('rtl-status-badge');
+    function toggleDirection() {
+      const currentDir = document.documentElement.getAttribute('dir');
+      const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
+      document.documentElement.setAttribute('dir', newDir);
+      localStorage.setItem('dir', newDir);
+      if (rtlStatusBadge) rtlStatusBadge.textContent = newDir.toUpperCase();
+    }
+    if (rtlToggleBtn) rtlToggleBtn.addEventListener('click', toggleDirection);
+    if (localStorage.getItem('dir') === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+      if (rtlStatusBadge) rtlStatusBadge.textContent = 'RTL';
+    }
+
+    // Sticky Header Scroll Elevation Effect
+    window.addEventListener('scroll', () => {
+      const dashHeader = document.getElementById('dashboard-header');
+      if (dashHeader) {
+        if (window.scrollY > 10) {
+          dashHeader.classList.add('shadow-md');
+          dashHeader.classList.remove('shadow-sm');
+        } else {
+          dashHeader.classList.remove('shadow-md');
+          dashHeader.classList.add('shadow-sm');
+        }
+      }
+    });
+
+    // URL Hash listener to open tab directly on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById(`tab-content-${hash}`)) {
+        switchTab(hash);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
