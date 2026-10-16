@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -111,7 +111,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
   <!-- ========================================== -->
   <!--                 NAVBAR                     -->
@@ -140,7 +140,7 @@
         <!-- CENTER NAVIGATION (DESKTOP) -->
         <div class="hidden xl:flex items-center gap-1 xl:gap-2.5 2xl:gap-4 whitespace-nowrap flex-shrink-0">
           
-          <!-- 1. Home â–¾ (Dropdown) -->
+          <!-- 1. Home Ã¢â€“Â¾ (Dropdown) -->
           <div class="relative group flex-shrink-0" id="home-dropdown-desktop">
             <a href="index.html" class="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg transition-all focus:outline-none whitespace-nowrap flex-shrink-0 text-brand-600 dark:text-brand-400 bg-brand-50/80 dark:bg-slate-800 font-bold border border-brand-200/50 dark:border-slate-700">
               <span>Home</span>
@@ -156,7 +156,12 @@
             </div>
           </div>
 
-          <!-- 2. Services -->
+          <!-- 2. About Us -->
+          <a href="about.html" class="px-3 py-2 text-sm rounded-lg transition-all whitespace-nowrap flex-shrink-0 text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60">
+            About Us
+          </a>
+
+          <!-- 3. Services -->
           <a href="services.html" class="px-3 py-2 text-sm rounded-lg transition-all whitespace-nowrap flex-shrink-0 text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60">
             Services
           </a>
@@ -181,7 +186,7 @@
             Contact
           </a>
 
-          <!-- 7. Dashboard â–¾ (Dropdown) -->
+          <!-- 7. Dashboard Ã¢â€“Â¾ (Dropdown) -->
           <div class="relative group flex-shrink-0" id="dashboard-dropdown-desktop">
             <a href="user-dashboard.html" class="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg transition-all focus:outline-none whitespace-nowrap flex-shrink-0 text-brand-600 dark:text-brand-400 bg-brand-50/80 dark:bg-slate-800 font-bold border border-brand-200/50 dark:border-slate-700">
               <span>Dashboard</span>
@@ -241,9 +246,9 @@
   <!-- ========================================== -->
   <!--           MOBILE NAVIGATION DRAWER         -->
   <!-- ========================================== -->
-  <div id="mobile-drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+  <div id="mobile-drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 xl:hidden"></div>
 
-  <aside id="mobile-drawer" class="mobile-drawer fixed top-0 right-0 z-50 w-full sm:w-80 h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl transform translate-x-full lg:hidden flex flex-col justify-between overflow-y-auto">
+  <aside id="mobile-drawer" class="mobile-drawer fixed top-0 right-0 z-50 w-full sm:w-80 h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl transform translate-x-full xl:hidden flex flex-col justify-between overflow-y-auto">
     
     <!-- Drawer Header -->
     <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
@@ -283,6 +288,12 @@
           </a>
         </div>
       </div>
+
+      <!-- About Us -->
+      <a href="about.html" class="mobile-nav-link flex items-center gap-2.5 p-3.5 text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-800 transition-colors">
+        <i data-lucide="info" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i>
+        About Us
+      </a>
 
       <!-- Services -->
       <a href="services.html" class="mobile-nav-link flex items-center gap-2.5 p-3.5 text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-800 transition-colors">
@@ -393,7 +404,7 @@
               <i data-lucide="calendar" class="w-5 h-5"></i>
               Book Your Appointment
             </a>
-            <a href="therapists.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 text-base font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 rounded-xl backdrop-blur-md transition-all">
+            <a href="#philosophy-section" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 text-base font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 rounded-xl backdrop-blur-md transition-all">
               <span>Our Recovery Philosophy</span>
               <i data-lucide="arrow-down" class="w-4 h-4"></i>
             </a>
@@ -822,9 +833,9 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
           
           <!-- Card 1: Direct Clinic Phone -->
-          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:border-brand-300 transition-all duration-300 flex flex-col justify-between space-y-6 group">
+          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:border-brand-400 transition-all duration-300 flex flex-col justify-between space-y-6 group">
             <div class="space-y-4">
-              <div class="w-14 h-14 rounded-2xl bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div class="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-950/80 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-800 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
                 <i data-lucide="phone-call" class="w-7 h-7"></i>
               </div>
               <h3 class="text-xl font-bold text-slate-900 dark:text-white">Call Clinic Hotline</h3>
@@ -832,42 +843,42 @@
                 Speak directly with our clinical intake coordinator for instant appointment availability.
               </p>
             </div>
-            <a href="tel:+18005557497" class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-500/20 transition-all">
+            <a href="tel:+18005557497" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
               <i data-lucide="phone" class="w-4 h-4"></i>
               <span>+1 (800) 555-PHYS</span>
             </a>
           </div>
 
           <!-- Card 2: Free 15-Min Screening -->
-          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:border-teal-300 transition-all duration-300 flex flex-col justify-between space-y-6 group">
+          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:border-brand-400 transition-all duration-300 flex flex-col justify-between space-y-6 group">
             <div class="space-y-4">
-              <div class="w-14 h-14 rounded-2xl bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div class="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-950/80 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-800 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
                 <i data-lucide="calendar-check" class="w-7 h-7"></i>
               </div>
               <h3 class="text-xl font-bold text-slate-900 dark:text-white">Free Initial Screening</h3>
               <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Get a 15-minute diagnostic posture & joint screening with no commitment required.
+                Get a 15-minute diagnostic posture &amp; joint screening with no commitment required.
               </p>
             </div>
-            <a href="mailto:care@physiocare-rehab.com?subject=Free 15-Min Screening Request" class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-md shadow-teal-500/20 transition-all">
-              <i data-lucide="mail" class="w-4 h-4"></i>
+            <a href="contact.html" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
               <span>Book Screening</span>
             </a>
           </div>
 
           <!-- Card 3: Clinic Location -->
-          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between space-y-6 group">
+          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:border-brand-400 transition-all duration-300 flex flex-col justify-between space-y-6 group">
             <div class="space-y-4">
-              <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div class="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-950/80 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-800 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
                 <i data-lucide="map-pin" class="w-7 h-7"></i>
               </div>
               <h3 class="text-xl font-bold text-slate-900 dark:text-white">Visit Our Center</h3>
               <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                104 Medical Plaza Blvd, Suite 300. Open Monday to Saturday with ample patient parking.
+                742 Medical Plaza, Suite 400. Open Monday to Saturday with reserved patient parking.
               </p>
             </div>
-            <a href="index.html" class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-bold text-sm transition-all">
-              <i data-lucide="navigation" class="w-4 h-4 text-emerald-500"></i>
+            <a href="contact.html#clinic-map" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <i data-lucide="navigation" class="w-4 h-4"></i>
               <span>View Clinic Hours</span>
             </a>
           </div>
@@ -888,7 +899,7 @@
             <form onsubmit="event.preventDefault(); alert('Consultation request received! Our clinic team will call you within 1 hour.');" class="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-3">
               <input type="text" placeholder="Your Name" required class="w-full sm:w-48 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-brand-500" />
               <input type="tel" placeholder="Phone Number" required class="w-full sm:w-48 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-brand-500" />
-              <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-700 hover:to-teal-700 text-white font-bold text-sm shadow-md whitespace-nowrap transition-all">
+              <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-500/20 whitespace-nowrap transition-all hover:scale-[1.02] active:scale-[0.98]">
                 Request Call Back
               </button>
             </form>
@@ -900,9 +911,6 @@
 
   </main>
 
-  <!-- ========================================== -->
-  <!--                 FOOTER                     -->
-  <!-- ========================================== -->
   <!-- ========================================== -->
   <!--                 FOOTER                     -->
   <!-- ========================================== -->
@@ -950,6 +958,7 @@
           <ul class="space-y-2.5 text-xs">
             <li><a href="index.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Home 1</a></li>
             <li><a href="home2.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Home 2</a></li>
+            <li><a href="about.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> About Us</a></li>
             <li><a href="services.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Clinical Services</a></li>
             <li><a href="therapists.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Specialist Therapists</a></li>
             <li><a href="sports-rehab.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Sports Injury Rehab</a></li>
@@ -1141,6 +1150,7 @@
   </script>
 </body>
 </html>
+
 
 
 

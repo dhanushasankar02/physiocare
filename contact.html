@@ -108,7 +108,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
   <!-- ========================================== -->
   <!-- ========================================== -->
@@ -138,7 +138,7 @@
         <!-- CENTER NAVIGATION (DESKTOP) -->
         <div class="hidden xl:flex items-center gap-1 xl:gap-2.5 2xl:gap-4 whitespace-nowrap flex-shrink-0">
           
-          <!-- 1. Home ▾ (Dropdown) -->
+          <!-- 1. Home â–¾ (Dropdown) -->
           <div class="relative group flex-shrink-0" id="home-dropdown-desktop">
             <a href="index.html" class="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg transition-all focus:outline-none whitespace-nowrap flex-shrink-0 text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60">
               <span>Home</span>
@@ -154,7 +154,12 @@
             </div>
           </div>
 
-          <!-- 2. Services -->
+          <!-- 2. About Us -->
+          <a href="about.html" class="px-3 py-2 text-sm rounded-lg transition-all whitespace-nowrap flex-shrink-0 text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60">
+            About Us
+          </a>
+
+          <!-- 3. Services -->
           <a href="services.html" class="px-3 py-2 text-sm rounded-lg transition-all whitespace-nowrap flex-shrink-0 text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60">
             Services
           </a>
@@ -179,7 +184,7 @@
             Contact
           </a>
 
-          <!-- 7. Dashboard ▾ (Dropdown) -->
+          <!-- 7. Dashboard â–¾ (Dropdown) -->
           <div class="relative group flex-shrink-0" id="dashboard-dropdown-desktop">
             <a href="user-dashboard.html" class="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg transition-all focus:outline-none whitespace-nowrap flex-shrink-0 text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60">
               <span>Dashboard</span>
@@ -239,9 +244,9 @@
   <!-- ========================================== -->
   <!--           MOBILE NAVIGATION DRAWER         -->
   <!-- ========================================== -->
-  <div id="mobile-drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+  <div id="mobile-drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 xl:hidden"></div>
 
-  <aside id="mobile-drawer" class="mobile-drawer fixed top-0 right-0 z-50 w-full sm:w-80 h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl transform translate-x-full lg:hidden flex flex-col justify-between overflow-y-auto">
+  <aside id="mobile-drawer" class="mobile-drawer fixed top-0 right-0 z-50 w-full sm:w-80 h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl transform translate-x-full xl:hidden flex flex-col justify-between overflow-y-auto">
     
     <!-- Drawer Header -->
     <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
@@ -281,6 +286,12 @@
           </a>
         </div>
       </div>
+
+      <!-- About Us -->
+      <a href="about.html" class="mobile-nav-link flex items-center gap-2.5 p-3.5 text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-800 transition-colors">
+        <i data-lucide="info" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i>
+        About Us
+      </a>
 
       <!-- Services -->
       <a href="services.html" class="mobile-nav-link flex items-center gap-2.5 p-3.5 text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-800 transition-colors">
@@ -468,17 +479,150 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SECTION 3: LOCATION & PARKING GUIDE        -->
+    <!-- SECTION 3: LOCATION, PARKING & INTERACTIVE MAP -->
     <!-- ========================================== -->
-    <section class="py-16 sm:py-24 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-      <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="clinic-map" class="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+      <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div class="space-y-3 max-w-2xl">
+            <span class="px-3.5 py-1.5 rounded-full bg-brand-100 dark:bg-brand-950/80 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-500"></i>
+              Interactive Location &amp; Directions
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Visit Our Medical Clinic &amp; Rehabilitation Center
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              Find our clinic easily in central Medical Plaza with direct reserved patient parking, wheelchair-accessible ramps, and convenient metro connections.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://maps.google.com/?q=742+Lexington+Ave+New+York+NY" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-lg shadow-brand-500/20 transition-all">
+              <i data-lucide="navigation" class="w-4 h-4"></i>
+              <span>Get Driving Directions</span>
+            </a>
+            <button type="button" onclick="navigator.clipboard.writeText('742 Medical Plaza, Suite 400, New York, NY 10065'); alert('Clinic address copied to clipboard!');" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs shadow-sm transition-all">
+              <i data-lucide="copy" class="w-4 h-4 text-brand-500"></i>
+              <span>Copy Address</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Map & Location Info Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          <!-- Interactive Map Container -->
+          <div class="lg:col-span-8 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 relative min-h-[420px] lg:min-h-[500px]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215573212586!2d-73.96825!3d40.76882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c258eb898be291%3A0x633512304892c90c!2s742%20Lexington%20Ave%2C%20New%20York%2C%20NY%2010065!5e0!3m2!1sen!2sus!4v1710000000000!5m2!1sen!2sus" 
+              class="w-full h-full min-h-[420px] lg:min-h-[500px] border-0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="PhysioCare Sports &amp; Rehab Clinic Location Map">
+            </iframe>
+            
+            <!-- Floating Map Badge -->
+            <div class="absolute top-4 left-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white flex-shrink-0 shadow-md">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-bold text-slate-900 dark:text-white">PhysioCare Clinic</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Suite 400 (Level 4, Elevator Access)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transit & Access Details Card -->
+          <div class="lg:col-span-4 flex flex-col justify-between space-y-4">
+            
+            <!-- Address & Clinic Status -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 text-xs font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Open Today &bull; 7AM - 8PM
+                </span>
+                <span class="text-xs font-semibold text-slate-400">Walk-ins / Consults</span>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">PhysioCare Medical Center</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                  742 Medical Plaza, Suite 400<br />
+                  Lexington Ave &amp; 59th St District<br />
+                  New York, NY 10065
+                </p>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2 text-xs text-slate-600 dark:text-slate-300">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="phone" class="w-4 h-4 text-brand-500 flex-shrink-0"></i>
+                  <span>Main Desk: <strong>+1 (800) 555-7497</strong></span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="mail" class="w-4 h-4 text-brand-500 flex-shrink-0"></i>
+                  <span>Email: <strong>care@physiocare.com</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transit Guide -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xl space-y-3">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Transit &amp; Commute</h4>
+              
+              <div class="space-y-3 text-xs">
+                <div class="flex items-start gap-3">
+                  <div class="w-7 h-7 rounded-lg bg-teal-50 dark:bg-teal-950 flex items-center justify-center text-teal-600 dark:text-teal-400 flex-shrink-0 mt-0.5">
+                    <i data-lucide="train" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-slate-900 dark:text-white">Subway &amp; Metro</div>
+                    <div class="text-slate-500 dark:text-slate-400">Lines 4, 5, 6, N, R, W to 59th St / Lexington (3 min walk)</div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-7 h-7 rounded-lg bg-brand-50 dark:bg-brand-950 flex items-center justify-center text-brand-600 dark:text-brand-400 flex-shrink-0 mt-0.5">
+                    <i data-lucide="bus" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-slate-900 dark:text-white">Bus Stops</div>
+                    <div class="text-slate-500 dark:text-slate-400">M101, M102, M103 stops right in front of the Plaza entrance</div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5">
+                    <i data-lucide="car" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-slate-900 dark:text-white">Complimentary Patient Parking</div>
+                    <div class="text-slate-500 dark:text-slate-400">Covered garage on level P1-P2. Ticket validated at front desk.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accessibility Note -->
+            <div class="p-4 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-xs text-brand-800 dark:text-brand-300 flex items-center gap-3">
+              <i data-lucide="accessibility" class="w-5 h-5 flex-shrink-0 text-brand-600 dark:text-brand-400"></i>
+              <span>100% ADA Compliant. Ramp entrances, automatic doors, and spacious medical elevators available.</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Patient Parking & Arrival Preview -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8 border-t border-slate-200 dark:border-slate-800">
           <div class="lg:col-span-6 space-y-4">
-            <span class="px-3.5 py-1.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 text-xs font-bold uppercase">Convenient Access</span>
-            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Reserved Patient Parking &amp; Wheelchair Access</h2>
+            <span class="px-3.5 py-1.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 text-xs font-bold uppercase">Convenient Arrival</span>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Reserved Parking &amp; Direct Wheelchair Access</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              Located on the 4th floor of Medical Plaza Plaza, our facility offers free covered parking spaces for rehabilitation patients, ground-level elevator ramps, and ambulance bay pickup.
+              We make your clinical visit stress-free. Pull into the dedicated Medical Plaza parking structure where designated wide rehabilitation spaces are situated right beside the express high-capacity medical elevators. Wheelchairs are available immediately upon arrival at the security concierge.
             </p>
           </div>
           <div class="lg:col-span-6">
@@ -530,7 +674,7 @@
             <span class="px-3.5 py-1.5 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 text-xs font-bold uppercase">Billing Desk</span>
             <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Instant Insurance Verification</h2>
             <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              We verify your PPO, Medicare, or Worker’s Comp policy benefits before your first appointment so there are no surprise co-pays.
+              We verify your PPO, Medicare, or Workerâ€™s Comp policy benefits before your first appointment so there are no surprise co-pays.
             </p>
             <button type="button" onclick="alert('Insurance desk will check your coverage policy!')" class="px-6 py-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs">
               Check Policy Coverage
@@ -544,7 +688,7 @@
     <!-- ========================================== -->
     <!-- SECTION 6: PATIENT ARRIVAL GUIDE           -->
     <!-- ========================================== -->
-    <section class="py-16 sm:py-24 bg-slate-100 dark:bg-slate-900">
+    <section class="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900">
       <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
         <div class="text-center space-y-2">
@@ -621,6 +765,7 @@
           <ul class="space-y-2.5 text-xs">
             <li><a href="index.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Home 1</a></li>
             <li><a href="home2.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Home 2</a></li>
+            <li><a href="about.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> About Us</a></li>
             <li><a href="services.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Clinical Services</a></li>
             <li><a href="therapists.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Specialist Therapists</a></li>
             <li><a href="sports-rehab.html" class="hover:text-brand-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i> Sports Injury Rehab</a></li>
@@ -826,3 +971,4 @@
   </script>
 </body>
 </html>
+
